@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقعي عن مدرستي</title>
+    <title>موقعي عن مدرستي<>
     <link rel="stylesheet" href="style.css">
     <style>
         /* إعدادات أساسية */
@@ -181,23 +181,139 @@
 
         <!-- قسم الكتب -->
         <section id="books">
-            <h2>تنزيل الكتب</h2>
-            <ul>
-                <li><a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank">تحميل كتاب اللغة العربية</a></li>
-                <li><a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank">تحميل كتاب الرياضيات</a></li>
-                <li><a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank">تحميل كتاب العلوم</a></li>
-            </ul>
-            <a href="books.html" class="contact-btn">رؤية المزيد</a>
-        </section>
+    <h2>تحميل الكتب الدراسية</h2>
+    <div class="books-container">
+        <div class="book">
+            <img src="https://via.placeholder.com/150x200?text=كتاب+العربية" alt="كتاب اللغة العربية">
+            <h3>كتاب اللغة العربية</h3>
+            <a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank" class="download-btn">تحميل</a>
+        </div>
+        <div class="book">
+            <img src="https://via.placeholder.com/150x200?text=كتاب+الرياضيات" alt="كتاب الرياضيات">
+            <h3>كتاب الرياضيات</h3>
+            <a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank" class="download-btn">تحميل</a>
+        </div>
+        <div class="book">
+            <img src="https://via.placeholder.com/150x200?text=كتاب+العلوم" alt="كتاب العلوم">
+            <h3>كتاب العلوم</h3>
+            <a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank" class="download-btn">تحميل</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .books-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .book {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        width: 200px;
+    }
+
+    .book img {
+        border-radius: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        height: auto;
+    }
+
+    .book h3 {
+        font-size: 1.2rem;
+        color: #007bff;
+        margin: 10px 0;
+    }
+
+    .download-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .download-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
 
         <!-- قسم تواصل معنا -->
         <section id="contact" class="contact-section">
-            <h2>تواصل معنا</h2>
-            <p>نحن هنا لمساعدتك، تواصل معنا عبر الوسائل التالية:</p>
+    <h2>تواصل معنا</h2>
+    <p>نسعد بتواصلكم معنا لأي استفسارات أو اقتراحات. يرجى ملء النموذج أدناه:</p>
+    <form action="send_message.php" method="post" class="contact-form">
+        <label for="name">الاسم:</label>
+        <input type="text" id="name" name="name" required placeholder="أدخل اسمك">
 
-            </ul>
-            <a href="contact.html" class="contact-btn">رؤية المزيد</a>
-        </section>
+        <label for="email">البريد الإلكتروني:</label>
+        <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+
+        <label for="message">الرسالة:</label>
+        <textarea id="message" name="message" rows="5" required placeholder="اكتب رسالتك هنا..."></textarea>
+
+        <button type="submit" class="submit-btn">إرسال</button>
+    </form>
+</section>
+
+<style>
+    .contact-form {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .contact-form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .contact-form input, 
+    .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .contact-form input:focus, 
+    .contact-form textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .submit-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
     </main>
 
     <footer>
