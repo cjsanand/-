@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنشورات - موقع مدرستي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: #fff;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        main {
+            padding: 20px 15px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #00c6ff;
+        }
+
+        .posts-container {
+            margin-top: 20px;
+        }
+
+        .post {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .post h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .post p {
+            color: #555;
+        }
+
+        .post button {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9em;
+        }
+
+        .post button:hover {
+            background-color: #ff1a1a;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>موقع مدرستي - إضافة منشور</h1>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h2>أضف منشور جديد</h2>
+            <form id="post-form">
+                <input type="text" id="post-title" placeholder="عنوان المنشور" required>
+                <textarea id="post-content" placeholder="محتوى المنشور" rows="4" required></textarea>
+                <button type="submit">نشر المنشور</button>
+            </form>
+        </section>
+
+        <!-- عرض المنشورات -->
+        <section class="posts-container" id="posts-container">
+            <h2>المنشورات السابقة</h2>
+            <!-- سيتم ملء المنشورات هنا -->
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 - مدرستي</p>
+    </footer>
+
+    <script>
+        // دالة لإضافة منشور جديد إلى localStorage
+        function addPost(title, content) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const newPost = { title, content, date: new Date() };
+            posts.push(newPost);
+            localStorage.setItem('posts', JSON.stringify(posts));
+        }
+
+        // دالة لعرض المنشورات من localStorage
+        function displayPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            postsContainer.innerHTML = '';  // مسح المحتوى القديم
+
+            posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+
+                postElement.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                    <button onclick="deletePost(${index})">حذف المنشور</button>
+                `;
+
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        // دالة لحذف المنشور من localStorage
+        function deletePost(index) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.splice(index, 1);  // حذف المنشور بناءً على الفهرس
+            localStorage.setItem('posts', JSON.stringify(posts));
+            displayPosts();  // إعادة عرض المنشورات بعد الحذف
+        }
+
+        // إضافة المنشور عند إرسال النموذج
+        document.getElementById('post-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // منع إعادة تحميل الصفحة عند إرسال النموذج
+
+            const title = document.getElementById('post-title').value;
+            const content = document.getElementById('post-content').value;
+
+            if (title && content) {
+                addPost(title, content);  // إضافة المنشور إلى localStorage
+                displayPosts();  // عرض المنشورات بعد إضافة منشور جديد
+
+                // مسح الحقول بعد نشر المنشور
+                document.getElementById('post-title').value = '';
+                document.getElementById('post-content').value = '';
+
+                alert('تم نشر المنشور بنجاح!');
+            } else {
+                alert('يرجى ملء جميع الحقول!');
+            }
+        });
+
+        // عرض المنشورات عند تحميل الصفحة
+        window.onload = displayPosts;
+
+    </script>
+
+</body>
+</html>

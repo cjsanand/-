@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الفيديوهات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .video {
+            margin-bottom: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .search-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مكتبة الفيديوهات</h1>
+    </header>
+
+    <main>
+        <!-- نموذج البحث -->
+        <div class="search-box">
+            <h2>بحث عن المحاضرات</h2>
+            <form id="searchForm" onsubmit="return searchVideos(event)">
+                <input type="text" id="searchQuery" placeholder="ابحث عن محاضرة..." required>
+                <button type="submit">ابحث</button>
+            </form>
+        </div>
+
+        <!-- قسم محاضرات إلكترونية -->
+        <section class="section" id="lectures">
+            <h2>محاضرات إلكترونية</h2>
+            <div id="videoContainer">
+                <!-- سيتم إضافة الفيديوهات هنا بناءً على البحث -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 - مدرستي</p>
+    </footer>
+
+    <script>
+        const API_KEY = "AIzaSyCCUwbxxT-t4FHW83MNBdp23gx3pLH2wA0"; // API Key الخاص بك
+        const BASE_URL = "https://www.googleapis.com/youtube/v3/search"; // رابط API
+
+        async function searchVideos(event) {
+            event.preventDefault(); // منع إرسال النموذج بشكل تقليدي
+
+            const query = document.getElementById("searchQuery").value;
+            const videoContainer = document.getElementById("videoContainer");
+
+            // تنظيف المحتوى الحالي
+            videoContainer.innerHTML = "";
+
+            // إرسال طلب إلى YouTube API
+            const url = `${BASE_URL}?part=snippet&q=${query}&key=${API_KEY}&maxResults=5&type=video`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.items && data.items.length > 0) {
+                    // عرض الفيديوهات
+                    data.items.forEach(item => {
+                        const videoId = item.id.videoId;
+                        const videoTitle = item.snippet.title;
+                        const videoDescription = item.snippet.description;
+                        const videoThumbnail = item.snippet.thumbnails.medium.url;
+
+                        const videoElement = document.createElement("div");
+                        videoElement.classList.add("video");
+
+                        const iframe = document.createElement("iframe");
+                        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                        iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+                        iframe.allowFullscreen = true;
+
+                        const caption = document.createElement("p");
+                        caption.classList.add("caption");
+                        caption.textContent = `محاضرة: ${videoTitle}`;
+
+                        videoElement.appendChild(iframe);
+                        videoElement.appendChild(caption);
+                        videoContainer.appendChild(videoElement);
+                    });
+                } else {
+                    videoContainer.innerHTML = "<p>لم يتم العثور على محاضرات تطابق البحث.</p>";
+                }
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+                videoContainer.innerHTML = "<p>حدث خطأ أثناء تحميل الفيديوهات. حاول لاحقًا.</p>";
+            }
+        }
+    </script>
+</body>
+</html>

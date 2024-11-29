@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي عن مدرستي</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* إعدادات أساسية */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth; /* للسماح بالانتقال السلس */
+        }
+
+        /* إعدادات رأس الصفحة */
+        header {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem; /* جعل النص أصغر */
+        }
+
+        /* إعدادات القائمة العلوية */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #0056b3;
+            margin: 0;
+            position: fixed;
+            top: 60px;
+            width: 100%;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        nav ul li a:hover {
+            background-color: #004494;
+            border-radius: 5px;
+        }
+
+        /* إعدادات الجسم الرئيسي */
+        main {
+            padding-top: 130px; /* لضمان أن النص لا يتداخل مع رأس الصفحة */
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        section {
+            background-color: white;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .contact-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* إعدادات الفوتر */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* تصميم قسم تواصل معنا */
+        .contact-section p {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مرحبًا بكم في موقع مدرستي</h1>
+    </header>
+
+    <!-- القائمة العلوية -->
+    <nav>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#photos">الصور</a></li>
+            <li><a href="#videos">الفيديوهات</a></li>
+            <li><a href="#books">الكتب</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- القسم الرئيسي -->
+        <section id="home">
+            <h2>أهلاً وسهلاً</h2>
+            <p>هذا الموقع مخصص لعرض أنشطة وأخبار مدرستنا. استمتع بتصفح المحتوى واستكشف المزيد.</p>
+        </section>
+
+        <!-- قسم الصور -->
+        <section id="photos">
+            <h2>معرض الصور</h2>
+            <div class="slider">
+                <div class="slide">
+                    <img src="https://via.placeholder.com/800x400?text=Image+1" alt="صورة 1">
+                    <p class="caption">صورة لطلاب المدرسة أثناء نشاط رياضي</p>
+                </div>
+                <div class="slide">
+                    <img src="https://via.placeholder.com/800x400?text=Image+2" alt="صورة 2">
+                    <p class="caption">صورة للمختبر العلمي في المدرسة</p>
+                </div>
+                <div class="slide">
+                    <img src="https://via.placeholder.com/800x400?text=Image+3" alt="صورة 3">
+                    <p class="caption">صورة لمكتبة المدرسة الجديدة</p>
+                </div>
+            </div>
+            <a href="photos.html" class="contact-btn">رؤية المزيد</a>
+        </section>
+
+        <!-- قسم الفيديوهات -->
+        <section id="videos">
+            <h2>مكتبة الفيديوهات</h2>
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/TfQfqiRO3rM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <p class="caption">شرح موضوع المضارع البسيط - مادة اللغة العربية</p>
+            </div>
+            <div class="video">
+                <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <p class="caption">درس عن التفاعلات الكيميائية - مادة الكيمياء</p>
+            </div>
+            <a href="videos.html" class="contact-btn">رؤية المزيد</a>
+        </section>
+
+        <!-- قسم الكتب -->
+        <section id="books">
+            <h2>تنزيل الكتب</h2>
+            <ul>
+                <li><a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank">تحميل كتاب اللغة العربية</a></li>
+                <li><a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank">تحميل كتاب الرياضيات</a></li>
+                <li><a href="https://drive.google.com/file/d/YOUR_FILE_ID/view" target="_blank">تحميل كتاب العلوم</a></li>
+            </ul>
+            <a href="books.html" class="contact-btn">رؤية المزيد</a>
+        </section>
+
+        <!-- قسم تواصل معنا -->
+        <section id="contact" class="contact-section">
+            <h2>تواصل معنا</h2>
+            <p>نحن هنا لمساعدتك، تواصل معنا عبر الوسائل التالية:</p>
+
+            </ul>
+            <a href="contact.html" class="contact-btn">رؤية المزيد</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 - مدرستي</p>
+    </footer>
+</body>
+</html>

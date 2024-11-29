@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية - موقع مدرستي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: #fff;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px 15px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .section > div {
+            flex: 1 1 45%;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section > div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .post, .image {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .post h3, .image h3 {
+            color: #007bff;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .add-post-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+            width: 200px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .add-post-btn:hover {
+            background-color: #00c6ff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>موقع مدرستي</h1>
+        <nav>
+            <ul>
+                <li><a href="a1.html">الرئيسية</a></li>
+                <!-- قم بإخفاء الروابط الخاصة بـ a2 و a3 للمستخدمين العاديين -->
+                <li><a href="a2.html" style="display:none">المنشورات</a></li>
+                <li><a href="a3.html" style="display:none">الصور</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <!-- قسم المنشورات -->
+            <div>
+                <h2>المنشورات</h2>
+                <div id="posts-container">
+                    <!-- المنشورات ستظهر هنا -->
+                </div>
+            </div>
+
+            <!-- قسم الصور -->
+            <div>
+                <h2>معرض الصور</h2>
+                <div id="images-container">
+                    <!-- الصور ستظهر هنا -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 - مدرستي</p>
+    </footer>
+
+    <script>
+        // تحميل المنشورات والصور من localStorage وعرضها في a1
+        function loadContent() {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const images = JSON.parse(localStorage.getItem('images')) || [];
+
+            const postsContainer = document.getElementById('posts-container');
+            const imagesContainer = document.getElementById('images-container');
+
+            // عرض المنشورات
+            postsContainer.innerHTML = '';  // مسح المحتوى القديم
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.innerHTML = `<h3>${post.title}</h3><p>${post.content}</p>`;
+                postsContainer.appendChild(postElement);
+            });
+
+            // عرض الصور
+            imagesContainer.innerHTML = '';  // مسح المحتوى القديم
+            images.forEach(image => {
+                const imageElement = document.createElement('div');
+                imageElement.classList.add('image');
+                imageElement.innerHTML = `<h3>${image.title}</h3><div class="image-container"><img src="${image.src}" alt="${image.title}"></div>`;
+                imagesContainer.appendChild(imageElement);
+            });
+        }
+
+        // استدعاء الدالة لتحميل المنشورات والصور عند تحميل الصفحة
+        window.onload = loadContent;
+    </script>
+
+</body>
+</html>

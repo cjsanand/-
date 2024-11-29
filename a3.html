@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة صور - موقع مدرستي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: #fff;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        main {
+            padding: 20px 15px;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container input[type="file"], .form-container input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #00c6ff;
+        }
+
+        .images-container {
+            margin-top: 20px;
+        }
+
+        .image-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>موقع مدرستي - إضافة صور</h1>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h2>أضف صورة جديدة</h2>
+            <form id="image-form">
+                <input type="file" id="image-file" accept="image/*">
+                <input type="url" id="image-url" placeholder="أو ضع رابط الصورة">
+                <button type="submit">رفع الصورة</button>
+            </form>
+        </section>
+
+        <!-- عرض الصور -->
+        <section class="images-container" id="images-container">
+            <h2>الصور السابقة</h2>
+            <!-- سيتم عرض الصور هنا -->
+        </section>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2024 - مدرستي</p>
+    </footer>
+
+    <script>
+        // دالة لإضافة صورة جديدة إلى localStorage
+        function addImage(src) {
+            const images = JSON.parse(localStorage.getItem('images')) || [];
+            const newImage = { src };
+            images.push(newImage);
+            localStorage.setItem('images', JSON.stringify(images));
+            displayImages();  // تحديث عرض الصور بعد إضافة الصورة
+        }
+
+        // دالة لعرض الصور من localStorage
+        function displayImages() {
+            const imagesContainer = document.getElementById('images-container');
+            const images = JSON.parse(localStorage.getItem('images')) || [];
+            imagesContainer.innerHTML = '';  // مسح المحتوى القديم
+
+            images.forEach(image => {
+                const imageElement = document.createElement('div');
+                imageElement.classList.add('image-item');
+                imageElement.innerHTML = `
+                    <img src="${image.src}" alt="صورة">
+                    <button onclick="deleteImage(${images.indexOf(image)})">حذف الصورة</button>
+                `;
+                imagesContainer.appendChild(imageElement);
+            });
+        }
+
+        // دالة لحذف صورة من localStorage
+        function deleteImage(index) {
+            const images = JSON.parse(localStorage.getItem('images')) || [];
+            images.splice(index, 1);  // حذف الصورة بناءً على الفهرس
+            localStorage.setItem('images', JSON.stringify(images));
+            displayImages();  // إعادة عرض الصور بعد الحذف
+        }
+
+        // إضافة الصورة عند إرسال النموذج
+        document.getElementById('image-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // منع إعادة تحميل الصفحة عند إرسال النموذج
+
+            const file = document.getElementById('image-file').files[0];
+            const imageUrl = document.getElementById('image-url').value;
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    addImage(event.target.result);  // إضافة الصورة إلى localStorage
+                    document.getElementById('image-file').value = '';  // مسح الحقل بعد رفع الصورة
+                    alert('تم رفع الصورة بنجاح!');
+                };
+                reader.readAsDataURL(file);  // قراءة الصورة من جهاز المستخدم
+            } else if (imageUrl) {
+                addImage(imageUrl);  // إضافة الصورة عن طريق الرابط
+                document.getElementById('image-url').value = '';  // مسح حقل الرابط
+                alert('تم إضافة الصورة من الرابط بنجاح!');
+            } else {
+                alert('يرجى اختيار صورة أو إدخال رابط!');
+            }
+        });
+
+        // عرض الصور عند تحميل الصفحة
+        window.onload = displayImages;
+    </script>
+
+</body>
+</html>
